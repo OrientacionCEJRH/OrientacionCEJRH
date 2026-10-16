@@ -3,59 +3,1030 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guía Interactiva</title>
+  <title>Guía Interactiva de Orientación Vocacional | Kuder</title>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 2rem; background: #f8fafc; color: #1e293b; }
-    .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .step { border-left: 4px solid #3b82f6; padding-left: 1rem; margin-bottom: 1.5rem; }
-    .interactive-box { background: #f1f5f9; padding: 1rem; border-radius: 6px; margin: 1rem 0; }
-    button { background: #2563eb; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #1d4ed8; }
-    .hidden { display: none; }
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --primary-light: #e0e7ff;
+      --secondary: #f59e0b;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Encabezado Hero */
+    header {
+      background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%);
+      color: white;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      backdrop-filter: blur(4px);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      max-width: 680px;
+      margin: 0 auto;
+      opacity: 0.92;
+      font-size: 1.05rem;
+    }
+
+    /* Navegación por Pestañas */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background: var(--surface);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 0.65rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      background: #f1f5f9;
+      color: var(--text);
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+    }
+
+    /* Contenedor Principal */
+    .container {
+      max-width: 1080px;
+      margin: 2rem auto;
+      padding: 0 1.25rem 3rem;
+    }
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .tab-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tarjetas y Grillas */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Bloque de Frases Interactivas */
+    .quote-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .quote-card {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .quote-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(245, 158, 11, 0.12);
+    }
+    .quote-card h4 {
+      color: #b45309;
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .quote-card p {
+      font-size: 0.88rem;
+      color: #78350f;
+      display: none;
+      margin-top: 0.5rem;
+      border-top: 1px dashed #fcd34d;
+      padding-top: 0.5rem;
+    }
+    .quote-card.open p {
+      display: block;
+    }
+
+    /* Analizador Kuder */
+    .kuder-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .kuder-area-btn {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .kuder-area-btn:hover {
+      border-color: #a5b4fc;
+    }
+    .kuder-area-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .kuder-area-btn .num {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      margin-bottom: 0.35rem;
+    }
+    .kuder-area-btn h4 {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .results-box {
+      background: var(--surface);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .pill {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .pill.combo {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #14532d;
+      font-weight: 600;
+    }
+
+    /* Buscador Universidades */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .filter-bar input, .filter-bar select {
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      flex: 1;
+      min-width: 200px;
+    }
+    .uni-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      margin-right: 0.35rem;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    /* Simulador Triadas */
+    .triad-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .triad-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #f1f5f9;
+      gap: 1rem;
+    }
+    .triad-row:last-child { border-bottom: none; }
+    .triad-controls {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .btn-choice {
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+    .btn-choice.plus.active {
+      background: var(--success);
+      color: white;
+      border-color: var(--success);
+    }
+    .btn-choice.minus.active {
+      background: var(--danger);
+      color: white;
+      border-color: var(--danger);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Guía Interactiva de Aprendizaje</h1>
-    <p>Sigue los pasos y verifica tu progreso:</p>
 
-    <div class="step">
-      <h3>Paso 1: Diagnóstico inicial</h3>
-      <p>Selecciona una opción para desplegar el contenido adecuado:</p>
-      <div class="interactive-box">
-        <label><input type="radio" name="level" onclick="mostrarInfo('basico')"> Nivel Básico</label><br>
-        <label><input type="radio" name="level" onclick="mostrarInfo('avanzado')"> Nivel Avanzado</label>
-        
-        <div id="basico" class="hidden" style="margin-top: 10px;">
-          <strong>Ruta Básica:</strong> Comenzaremos revisando los fundamentos teóricos y conceptos clave.
+  <header>
+    <span class="badge">Orientación Vocacional & Perfil Kuder</span>
+    <h1>Construye tu Futuro Profesional</h1>
+    <p>Explora para qué sirve la orientación vocacional, analiza tus intereses según la Escala de Preferencias de Kuder y descubre carreras universitarias afines a ti.</p>
+  </header>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="openTab('tab-intro', this)">1. ¿Para qué sirve la Orientación?</button>
+    <button class="tab-btn" onclick="openTab('tab-kuder', this)">2. Analizador Kuder (10 Áreas)</button>
+    <button class="tab-btn" onclick="openTab('tab-unis', this)">3. Universidades y Carreras</button>
+    <button class="tab-btn" onclick="openTab('tab-simulador', this)">4. Práctica de Triadas y Validez</button>
+  </nav>
+
+  <main class="container">
+
+    <!-- PESTAÑA 1: ¿PARA QUÉ SIRVE LA ORIENTACIÓN VOCACIONAL? -->
+    <section id="tab-intro" class="tab-panel active">
+      <h2 class="section-title">¿Qué es y para qué sirve la Orientación Vocacional?</h2>
+      <p class="section-subtitle">Basado en el marco psicopedagógico del Lic. Psic. Jonathan Uvani Huerta Quintana y fundamentos de evaluación vocacional.</p>
+
+      <div class="card" style="margin-bottom: 1.5rem; border-left: 5px solid var(--primary);">
+        <h3>Definición Fundamental</h3>
+        <p>Es un <strong>trabajo preventivo</strong> que contiene un conjunto de técnicas y prácticas destinadas a brindar al estudiante los elementos necesarios para <strong>optimizar su rendimiento</strong>, tomando en cuenta las <strong>aptitudes y habilidades</strong> que cada uno posee, apoyando así su vida futura profesional en la elección de su carrera como un <strong>proceso permanente</strong> a lo largo de la vida del individuo.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🧠 Aprendizaje y Autoconocimiento</h3>
+          <p>Permite organizar la situación confusa en la que puedas encontrarte al elegir carrera. No se trata de adivinar, sino de conocer tus áreas de interés, tus pasiones, tus aptitudes, tus actitudes y también tus dificultades actuales para trabajar sobre ellas.</p>
         </div>
-        <div id="avanzado" class="hidden" style="margin-top: 10px;">
-          <strong>Ruta Avanzada:</strong> Pasaremos directo a los ejercicios prácticos y análisis de casos.
+        <div class="card">
+          <h3>🔥 Motivación y Autoeficacia</h3>
+          <p>Las aptitudes no son el único factor; la <strong>motivación</strong> (determinada por tus intereses y preferencias) y la <strong>autoeficacia</strong> (creer en tu capacidad para desarrollar habilidades y alcanzar metas) son decisivas para no abandonar tus estudios.</p>
+        </div>
+        <div class="card">
+          <h3>🧭 Planes Vocacionales Alternativos</h3>
+          <p>Mediante pruebas, instrumentos psicométricos y búsqueda de información (modelos profesionales), la orientación te ayuda a construir no solo una opción única, sino <strong>planes vocacionales alternativos</strong> bien fundamentados.</p>
         </div>
       </div>
-    </div>
 
-    <div class="step">
-      <h3>Paso 2: Comprobación de conceptos</h3>
-      <div class="interactive-box">
-        <label><input type="checkbox" onchange="actualizarProgreso()"> Completé la lectura principal</label><br>
-        <label><input type="checkbox" onchange="actualizarProgreso()"> Realicé la actividad formativa</label>
-        <p id="progreso-texto">Progreso: 0 de 2 completados</p>
+      <h3 class="section-title" style="font-size: 1.25rem;">Dudas comunes y frases que escuchamos al elegir (Haz clic en cada tarjeta)</h3>
+      <p class="section-subtitle">Analiza estas expresiones frecuentes en el proceso de toma de decisión vocacional:</p>
+
+      <div class="quote-grid">
+        <div class="quote-card" onclick="this.classList.toggle('open')">
+          <h4>💬 "No sé qué hacer o qué estudiar"</h4>
+          <small>Haz clic para analizar</small>
+          <p>Es el punto de partida más común. La desorientación suele deberse a falta de información estructurada sobre ti mismo y sobre la oferta académica real.</p>
+        </div>
+        <div class="quote-card" onclick="this.classList.toggle('open')">
+          <h4>💬 "Te vas a morir de hambre"</h4>
+          <small>Haz clic para analizar</small>
+          <p>Prejuicio social frecuente. Ninguna carrera garantiza el éxito o el fracaso por sí sola; depende de la especialización, habilidades complementarias y adaptación al campo laboral.</p>
+        </div>
+        <div class="quote-card" onclick="this.classList.toggle('open')">
+          <h4>💬 "¿Lo que me gusta o lo que me da trabajo?"</h4>
+          <small>Haz clic para analizar</small>
+          <p>Falsa dicotomía. El objetivo de la orientación vocacional es encontrar la intersección entre tus intereses reales, tus aptitudes y las necesidades del entorno profesional.</p>
+        </div>
+        <div class="quote-card" onclick="this.classList.toggle('open')">
+          <h4>💬 "No malgastar el tiempo"</h4>
+          <small>Haz clic para analizar</small>
+          <p>Elegir de forma informada y preventiva evita cambios constantes de carrera o frustración por ingresar a una licenciatura por azar o presión familiar.</p>
+        </div>
+        <div class="quote-card" onclick="this.classList.toggle('open')">
+          <h4>💬 "Aptitudes, actitudes y 'deficiencias'"</h4>
+          <small>Haz clic para analizar</small>
+          <p>Reconocer qué nos cuesta trabajo no nos descalifica; a través de la <strong>modificación de conducta</strong> y hábitos de estudio podemos fortalecer áreas débiles.</p>
+        </div>
+        <div class="quote-card" onclick="this.classList.toggle('open')">
+          <h4>💬 "Búsqueda de información (modelos)"</h4>
+          <small>Haz clic para analizar</small>
+          <p>Investigar planes de estudio reales, hablar con profesionistas en activo y aplicar baterías psicométricas elimina las ideas románticas o irreales sobre una carrera.</p>
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
+
+    <!-- PESTAÑA 2: ANALIZADOR KUDER -->
+    <section id="tab-kuder" class="tab-panel">
+      <h2 class="section-title">Analizador de Opciones según la Escala Kuder</h2>
+      <p class="section-subtitle">
+        Según el Manual de la <strong>Escala de Preferencias Vocacional de Kuder (Forma CH / C)</strong>, cuando obtienes un puntaje alto (<strong>Percentil 75 / 77 o superior</strong>) en una o más de las 10 áreas, se analizan tanto las áreas individuales como sus <strong>combinaciones por pares</strong> (Método de Aproximación Progresiva).
+      </p>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3>Selecciona de 1 a 3 áreas donde tengas mayor interés (o tus puntajes altos en Kuder):</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Haz clic en las tarjetas de abajo para ver su definición oficial, las carreras individuales y las <strong>combinaciones ocupacionales exactas del manual</strong>.
+        </p>
+
+        <div class="kuder-selector-grid" id="kuder-buttons"></div>
+
+        <button class="btn-primary" style="background:#64748b;" onclick="clearKuderSelection()">Limpiar selección</button>
+      </div>
+
+      <div id="kuder-analysis-output" class="results-box">
+        <h3>📋 Resultado del Análisis Vocacional</h3>
+        <p style="color: var(--text-muted);">Selecciona al menos un área arriba para desplegar su interpretación y las carreras recomendadas por el manual de Kuder.</p>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 3: UNIVERSIDADES Y CARRERAS -->
+    <section id="tab-unis" class="tab-panel">
+      <h2 class="section-title">Explorador de Carreras y Universidades</h2>
+      <p class="section-subtitle">Filtra opciones de licenciaturas e ingenierías vinculadas con las 10 escalas de Kuder y las principales instituciones de educación superior.</p>
+
+      <div class="filter-bar">
+        <input type="text" id="uni-search" placeholder="Buscar carrera (ej. Psicología, Mecatrónica, Medicina, Derecho)..." oninput="renderUniCards()" />
+        <select id="uni-area-filter" onchange="renderUniCards()">
+          <option value="all">Todas las Áreas de Kuder (0 a 9)</option>
+          <option value="0">0 - Aire Libre</option>
+          <option value="1">1 - Mecánico</option>
+          <option value="2">2 - Cálculo</option>
+          <option value="3">3 - Científico</option>
+          <option value="4">4 - Persuasivo</option>
+          <option value="5">5 - Artístico-Plástico</option>
+          <option value="6">6 - Literario</option>
+          <option value="7">7 - Musical</option>
+          <option value="8">8 - Servicio Social</option>
+          <option value="9">9 - Trabajo de Oficina</option>
+        </select>
+        <select id="uni-inst-filter" onchange="renderUniCards()">
+          <option value="all">Todas las Universidades</option>
+          <option value="UNAM">UNAM</option>
+          <option value="IPN">IPN</option>
+          <option value="UAEMéx">UAEMéx</option>
+          <option value="UAM">UAM</option>
+        </select>
+      </div>
+
+      <div class="grid" id="uni-cards-container"></div>
+    </section>
+
+    <!-- PESTAÑA 4: SIMULADOR DE TRIADAS Y VALIDEZ -->
+    <section id="tab-simulador" class="tab-panel">
+      <h2 class="section-title">¿Cómo se responde y valida el Test de Kuder?</h2>
+      <p class="section-subtitle">Conoce el sistema de triadas de elección forzada y verifica si tu puntaje de la Escala "V" (Verificación) es válido.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🔎 Verificador de Escala "V" (Validez)</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            En la hoja de respuestas del Kuder existe una serie <strong>"V" (Verificación)</strong> que detecta descuidos, omisiones o respuestas insinceras. Ingresa tu puntaje "V" para conocer su validez según el manual:
+          </p>
+          <div style="display:flex; gap: 0.5rem; align-items:center; margin-bottom: 1rem;">
+            <input type="number" id="v-score-input" placeholder="Ej. 39" min="0" max="60" style="padding: 0.6rem; border:1px solid var(--border); border-radius:8px; width: 120px; font-size:1rem;" />
+            <button class="btn-primary" onclick="checkVScore()">Verificar Puntaje V</button>
+          </div>
+          <div id="v-score-result" style="font-size: 0.92rem; padding: 0.75rem; border-radius: 8px; background: #f1f5f9;">
+            Ingresa un valor (el puntaje máximo normal es 44).
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>📊 Interpretación de Percentiles</h3>
+          <ul style="padding-left: 1.2rem; font-size: 0.92rem; display:flex; flex-direction:column; gap:0.5rem;">
+            <li><strong>Percentil 75 / 77 o más (Alto - Niveles 7, 8 y 9):</strong> Existe alta probabilidad de que te gusten las actividades de esta área. Debe priorizarse al elegir carrera.</li>
+            <li><strong>Percentil 25 a 74 (Corriente - Niveles 4, 5 y 6):</strong> Intereses de tipo promedio o corriente. Si ningún puntaje supera el percentil 75, se revisan con cautela los mayores a 65.</li>
+            <li><strong>Debajo del Percentil 23 / 25 (Bajo - Niveles 1, 2 y 3):</strong> Es muy probable que las ocupaciones de esta área <strong>no sean de tu agrado</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.25rem; margin-top: 1rem;">Simulador Interactivo de Triadas (Folleto de Aplicación Kuder)</h3>
+      <p class="section-subtitle">
+        Instrucción oficial: En cada grupo de 3 actividades, elige <strong>una que te guste MÁS (+)</strong> y <strong>una que te guste MENOS (-)</strong>. No existen respuestas buenas o malas.
+      </p>
+
+      <div id="triads-container"></div>
+    </section>
+
+  </main>
 
   <script>
-    function mostrarInfo(tipo) {
-      document.getElementById('basico').classList.add('hidden');
-      document.getElementById('avanzado').classList.add('hidden');
-      document.getElementById(tipo).classList.remove('hidden');
+    // ==========================================
+    // DATOS EXTRAÍDOS DE LOS MANUALES DE KUDER
+    // ==========================================
+    const kuderAreas = {
+      "0": {
+        code: "0",
+        name: "Actividad al Aire Libre",
+        desc: "Altos puntajes significan que te gusta pasar la mayor parte del tiempo en el campo, en los bosques o en el mar; te agrada cultivar plantas o cuidar animales. En cambio, no te sentirías muy a gusto en una fábrica, laboratorio u oficina.",
+        careers: [
+          "Ciencias del mar", "Ecólogos", "Geólogos", "Ingenieros agrónomos",
+          "Ingenieros forestales", "Ingenieros de minas", "Ingenieros pesqueros",
+          "Oficiales de ejército, marina, aviación, policía", "Profesores de educación física", "Topógrafos"
+        ]
+      },
+      "1": {
+        code: "1",
+        name: "Interés Mecánico",
+        desc: "Indica interés para trabajar con máquinas y herramientas, construir o arreglar objetos mecánicos, artefactos eléctricos, muebles, etc.",
+        careers: [
+          "Ingenieros civiles", "Ingenieros electricistas", "Ingenieros industriales",
+          "Ingenieros mecánicos", "Ingenieros metalúrgicos", "Ingenieros químicos",
+          "Ingenieros sanitarios", "Aviadores", "Físicos", "Electromecánicos", "Tecnólogos mecánicos"
+        ]
+      },
+      "2": {
+        code: "2",
+        name: "Interés para el Cálculo",
+        desc: "Lo poseen aquellas personas a quienes les gusta trabajar con números, estadística, presupuestos y resolución matemática.",
+        careers: [
+          "Actuarios", "Contadores públicos y auditores", "Economistas", "Estadísticos / Estadígrafos",
+          "Ingenieros de sistemas", "Profesores de matemáticas", "Programadores de computadores", "Tecnólogos en mercadeo"
+        ]
+      },
+      "3": {
+        code: "3",
+        name: "Interés Científico",
+        desc: "Manifiestan este interés quienes encuentran placer en investigar la razón de los hechos o de las cosas, en descubrir sus causas y en resolver problemas por curiosidad científica.",
+        careers: [
+          "Antropólogos", "Arqueólogos", "Astrónomos", "Bacteriólogos", "Biólogos",
+          "Ingenieros electricistas", "Ingenieros electrónicos", "Ingenieros de alimentos",
+          "Médicos y Cirujanos", "Médicos veterinarios", "Microbiólogos", "Odontólogos",
+          "Psicólogos", "Químicos", "Químicos farmacéutas", "Sociólogos", "Técnicos de laboratorio"
+        ]
+      },
+      "4": {
+        code: "4",
+        name: "Interés Persuasivo",
+        desc: "Lo poseen aquellas personas a quienes les gusta el trato con la gente, expresar sus puntos de vista, convencer a los demás respecto a algún proyecto, negociar o vender.",
+        careers: [
+          "Agentes de publicidad", "Comunicadores sociales", "Escritores",
+          "Juristas (Abogados, Jueces, Consejeros Jurídicos)", "Maestros / Profesores",
+          "Periodistas", "Jefes de ventas", "Diplomáticos"
+        ]
+      },
+      "5": {
+        code: "5",
+        name: "Interés Artístico-Plástico",
+        desc: "Personas a quienes les gusta hacer trabajos de creación de tipo manual o visual, usando combinaciones de colores, materiales, formas y diseños.",
+        careers: [
+          "Arquitectos", "Decoradores de interiores", "Delineantes de arquitectura",
+          "Dibujantes", "Escultores", "Pintores", "Fotógrafos", "Técnicos en Diseño Textil"
+        ]
+      },
+      "6": {
+        code: "6",
+        name: "Interés Literario",
+        desc: "Es propio de todos aquellos a quienes les gusta la lectura o encuentran placer en expresar sus ideas en forma oral o escrita.",
+        careers: [
+          "Bibliotecarios", "Educadores", "Escritores", "Juristas",
+          "Periodistas", "Profesores de filosofía", "Profesores de letras"
+        ]
+      },
+      "7": {
+        code: "7",
+        name: "Interés Musical",
+        desc: "Personas que denotan un marcado gusto para tocar instrumentos musicales, cantar, bailar, leer sobre música, estudiar compositores o asistir a conciertos.",
+        careers: [
+          "Actores y Actrices", "Compositores", "Directores de orquesta",
+          "Músicos profesionales", "Profesores de música", "Artistas de ballet"
+        ]
+      },
+      "8": {
+        code: "8",
+        name: "Interés por el Servicio Social",
+        desc: "Un alto puntaje indica un gran interés por servir y ayudar a los demás: a los necesitados, a los enfermos, a los niños, jóvenes y ancianos.",
+        careers: [
+          "Consejeros Vocacionales", "Enfermeros(as)", "Fonoaudiólogos", "Fisioterapeutas",
+          "Médicos y Cirujanos", "Odontólogos", "Pedagogos (en general)", "Psicólogos",
+          "Terapistas del lenguaje", "Terapistas ocupacionales", "Trabajadores Sociales", "Educación preescolar"
+        ]
+      },
+      "9": {
+        code: "9",
+        name: "Interés en el Trabajo de Oficina",
+        desc: "Es propio de las personas a quienes les gusta un tipo de trabajo administrativo y de organización que requiere exactitud, método y precisión.",
+        careers: [
+          "Almacenistas", "Archivistas", "Cajeros", "Contadores",
+          "Secretarios(as) ejecutivos", "Tenedores de libros", "Administración documental"
+        ]
+      }
+    };
+
+    // Combinaciones por pares de la Tabla de Clasificación de Actividades Ocupacionales (Manual Kuder)
+    const kuderCombinations = {
+      "01": {
+        title: "01 · Aire Libre + Mecánico",
+        careers: [
+          "Ingenieros agrónomos especializados en maquinaria agrícola",
+          "Ingenieros civiles especializados en hidráulica",
+          "Ingenieros civiles especializados en vías de comunicación",
+          "Ingenieros de minas", "Ingenieros de petróleo", "Ingenieros navales", "Topógrafos"
+        ]
+      },
+      "02": {
+        title: "02 · Aire Libre + Cálculo",
+        careers: [
+          "Ingenieros agrónomos especializados en economía",
+          "Ingenieros agrónomos especializados en estadística"
+        ]
+      },
+      "03": {
+        title: "03 · Aire Libre + Científico",
+        careers: [
+          "Antropólogos", "Arqueólogos", "Biólogos marinos", "Geólogos",
+          "Ingenieros agrónomos (fitotecnia / parasitología)", "Ingenieros forestales", "Médicos veterinarios"
+        ]
+      },
+      "08": {
+        title: "08 · Aire Libre + Servicio Social",
+        careers: ["Profesores de educación física", "Trabajadores / Visitadores sociales"]
+      },
+      "12": {
+        title: "12 · Mecánico + Cálculo",
+        careers: ["Ingenieros civiles", "Ingenieros electricistas", "Ingenieros mecánicos"]
+      },
+      "13": {
+        title: "13 · Mecánico + Científico",
+        careers: [
+          "Geólogos", "Ingenieros civiles", "Ingenieros de minas", "Ingenieros electricistas",
+          "Ingenieros industriales", "Ingenieros mecánicos", "Ingenieros químicos",
+          "Odontólogos", "Optómetras", "Técnicos de laboratorio"
+        ]
+      },
+      "14": {
+        title: "14 · Mecánico + Persuasivo",
+        careers: ["Ingenieros industriales", "Especialistas técnicos en ventas de maquinaria y equipos"]
+      },
+      "15": {
+        title: "15 · Mecánico + Artístico-Plástico",
+        careers: [
+          "Arquitectos", "Arquitectos urbanistas", "Decoradores de interiores",
+          "Delineantes de arquitectura", "Dibujantes publicitarios", "Profesores de artes manuales", "Diseño textil"
+        ]
+      },
+      "17": {
+        title: "17 · Mecánico + Musical",
+        careers: ["Ingenieros de sonido / Audio"]
+      },
+      "18": {
+        title: "18 · Mecánico + Servicio Social",
+        careers: ["Profesores de materias técnicas"]
+      },
+      "23": {
+        title: "23 · Cálculo + Científico",
+        careers: [
+          "Astrónomos", "Actuarios", "Economistas", "Estadígrafos", "Físicos",
+          "Ingenieros civiles", "Ingenieros electricistas", "Ingenieros industriales",
+          "Ingenieros mecánicos", "Ingenieros de petróleos", "Ingenieros químicos",
+          "Matemáticos", "Profesores de matemáticas", "Químicos"
+        ]
+      },
+      "24": {
+        title: "24 · Cálculo + Persuasivo",
+        careers: ["Economistas"]
+      },
+      "25": {
+        title: "25 · Cálculo + Artístico-Plástico",
+        careers: ["Arquitectos", "Ingenieros civiles"]
+      },
+      "28": {
+        title: "28 · Cálculo + Servicio Social",
+        careers: ["Economistas", "Estadígrafos", "Profesores de matemáticas", "Profesores de materias comerciales"]
+      },
+      "29": {
+        title: "29 · Cálculo + Trabajo de Oficina",
+        careers: ["Contadores públicos", "Tenedores de libros"]
+      },
+      "34": {
+        title: "34 · Científico + Persuasivo",
+        careers: ["Farmacéuticos", "Ingenieros industriales", "Profesores de ciencias"]
+      },
+      "35": {
+        title: "35 · Científico + Artístico-Plástico",
+        careers: ["Arquitectos", "Médicos Cirujanos", "Odontólogos"]
+      },
+      "36": {
+        title: "36 · Científico + Literario",
+        careers: ["Filólogos", "Médicos", "Psicólogos"]
+      },
+      "37": {
+        title: "37 · Científico + Musical",
+        careers: ["Ingenieros de sonido"]
+      },
+      "38": {
+        title: "38 · Científico + Servicio Social",
+        careers: [
+          "Consejeros vocacionales", "Médicos", "Nutricionistas",
+          "Odontólogos", "Profesores de ciencias", "Psicólogos clínicos"
+        ]
+      },
+      "45": {
+        title: "45 · Persuasivo + Artístico-Plástico",
+        careers: ["Decoradores de interiores", "Dibujantes publicitarios"]
+      },
+      "46": {
+        title: "46 · Persuasivo + Literario",
+        careers: ["Escritores", "Juristas (Abogados)", "Periodistas", "Profesores de Letras"]
+      },
+      "47": {
+        title: "47 · Persuasivo + Musical",
+        careers: ["Actores y Actrices", "Directores de orquesta", "Profesores de canto", "Profesores de música"]
+      },
+      "48": {
+        title: "48 · Persuasivo + Servicio Social",
+        careers: [
+          "Comunicadores sociales", "Consejeros vocacionales",
+          "Juristas (en general)", "Pedagogos (en general)", "Trabajadores sociales"
+        ]
+      },
+      "56": {
+        title: "56 · Artístico-Plástico + Literario",
+        careers: ["Actores y Actrices", "Escritores"]
+      },
+      "58": {
+        title: "58 · Artístico-Plástico + Servicio Social",
+        careers: ["Profesores de artes manuales"]
+      },
+      "67": {
+        title: "67 · Literario + Musical",
+        careers: ["Actores y Actrices", "Profesores de música"]
+      },
+      "68": {
+        title: "68 · Literario + Servicio Social",
+        careers: [
+          "Escritores", "Periodistas", "Profesores de ciencias sociales",
+          "Profesores de filosofía", "Profesores de letras", "Trabajadores sociales"
+        ]
+      },
+      "69": {
+        title: "69 · Literario + Trabajo de Oficina",
+        careers: ["Bibliotecarios", "Secretarios ejecutivos"]
+      },
+      "78": {
+        title: "78 · Musical + Servicio Social",
+        careers: ["Músicos", "Profesores de música", "Profesores de baile"]
+      },
+      "89": {
+        title: "89 · Servicio Social + Trabajo de Oficina",
+        careers: ["Profesores de materias comerciales y administrativas"]
+      }
+    };
+
+    // Catálogo de Universidades y Carreras
+    const universityCatalog = [
+      { name: "Licenciatura en Psicología", areas: ["3", "8", "6"], unis: ["UNAM", "UAEMéx", "UAM", "IPN"], desc: "Evaluación, diagnóstico, intervención clínica, educativa, organizacional e investigación del comportamiento." },
+      { name: "Médico Cirujano / Medicina", areas: ["3", "8"], unis: ["UNAM", "IPN", "UAEMéx", "UAM"], desc: "Prevención, diagnóstico, tratamiento y rehabilitación de la salud humana con base científica y vocación de servicio." },
+      { name: "Ingeniería Civil", areas: ["1", "2", "0"], unis: ["UNAM", "IPN", "UAEMéx", "UAM"], desc: "Planeación, diseño, construcción y mantenimiento de obras de infraestructura urbana, hidráulica y vías de comunicación." },
+      { name: "Ingeniería en Sistemas / Computación", areas: ["2", "1", "3"], unis: ["UNAM", "IPN", "UAEMéx", "UAM"], desc: "Desarrollo de software, arquitectura de computadoras, redes, ciencia de datos e inteligencia artificial." },
+      { name: "Licenciatura en Derecho", areas: ["4", "6", "8"], unis: ["UNAM", "UAEMéx", "UAM"], desc: "Argumentación jurídica, procuración de justicia, asesoría legal y defensa de los derechos humanos e institucionales." },
+      { name: "Arquitectura y Diseño Urbano", areas: ["5", "1", "2"], unis: ["UNAM", "IPN", "UAEMéx", "UAM"], desc: "Proyección y diseño de espacios habitables, urbanismo, estética funcional y estructuras." },
+      { name: "Contaduría Pública y Finanzas", areas: ["2", "9"], unis: ["UNAM", "IPN", "UAEMéx"], desc: "Gestión financiera, auditoría, costos, impuestos y toma de decisiones económicas en organizaciones." },
+      { name: "Ingeniería Agronómica / Fitotecnia", areas: ["0", "3"], unis: ["UNAM", "UAEMéx", "UAM"], desc: "Producción agrícola sustentable, manejo de suelos, recursos forestales y mejoramiento genético vegetal." },
+      { name: "Medicina Veterinaria y Zootecnia", areas: ["0", "3"], unis: ["UNAM", "UAEMéx", "UAM"], desc: "Salud, producción y bienestar de especies animales domésticas, productivas y silvestres." },
+      { name: "Ingeniería Mecánica / Mecatrónica", areas: ["1", "2", "3"], unis: ["UNAM", "IPN", "UAEMéx", "UAM"], desc: "Diseño y automatización de sistemas mecánicos, robótica, manufactura y procesos industriales." },
+      { name: "Comunicación y Periodismo", areas: ["4", "6"], unis: ["UNAM", "UAEMéx", "UAM"], desc: "Producción mediática, investigación periodística, comunicación organizacional y opinión pública." },
+      { name: "Pedagogía y Ciencias de la Educación", areas: ["8", "6", "4"], unis: ["UNAM", "UAEMéx"], desc: "Diseño curricular, orientación educativa, docencia, gestión escolar y psicopedagogía." },
+      { name: "Actuaría y Economía", areas: ["2", "3", "4"], unis: ["UNAM", "UAEMéx", "UAM", "IPN"], desc: "Modelado matemático de riesgos, estadística aplicada, análisis de mercados y políticas económicas." },
+      { name: "Diseño Gráfico y Comunicación Visual", areas: ["5", "4"], unis: ["UNAM", "UAEMéx", "UAM"], desc: "Creación visual, ilustración, identidad corporativa, diseño editorial y medios digitales." },
+      { name: "Licenciatura en Música / Artes Escénicas", areas: ["7", "5"], unis: ["UNAM", "UAEMéx"], desc: "Ejecución instrumental, composición, dirección musical, docencia artística y artes dramáticas." }
+    ];
+
+    // Reactivos reales del Folleto Kuder para práctica
+    const sampleTriads = [
+      {
+        id: 1,
+        items: [
+          { letter: "a", text: "En sus viajes observar de preferencia la gente", area: "4 / 8" },
+          { letter: "b", text: "En sus viajes observar de preferencia los paisajes", area: "5 / 0" },
+          { letter: "c", text: "En sus viajes observar de preferencia los cultivos", area: "0" }
+        ]
+      },
+      {
+        id: 2,
+        items: [
+          { letter: "K", text: "Recibir clases de dibujo", area: "5" },
+          { letter: "L", text: "Recibir clases de biología", area: "3" },
+          { letter: "M", text: "Recibir clases de metalistería (trabajo en metal)", area: "1" }
+        ]
+      },
+      {
+        id: 3,
+        items: [
+          { letter: "U", text: "Escribir en un periódico la página dedicada a sucesos de actualidad", area: "6" },
+          { letter: "V", text: "Dictar conferencias populares sobre Química", area: "3" },
+          { letter: "W", text: "Ayudar a los jóvenes a descubrir su vocación", area: "8" }
+        ]
+      }
+    ];
+
+    // Estado de selección Kuder
+    let selectedAreas = [];
+
+    // Cambiar de pestaña
+    function openTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
     }
 
-    function actualizarProgreso() {
-      const checks = document.querySelectorAll('input[type="checkbox"]:checked').length;
-      document.getElementById('progreso-texto').textContent = `Progreso: ${checks} de 2 completados`;
+    // Inicializar Botones de las 10 Áreas de Kuder
+    function initKuderButtons() {
+      const container = document.getElementById('kuder-buttons');
+      container.innerHTML = Object.values(kuderAreas).map(area => `
+        <button class="kuder-area-btn" id="kbtn-${area.code}" onclick="toggleKuderArea('${area.code}')">
+          <span class="num">Área ${area.code}</span>
+          <h4>${area.name}</h4>
+        </button>
+      `).join('');
     }
+
+    function toggleKuderArea(code) {
+      const idx = selectedAreas.indexOf(code);
+      if (idx > -1) {
+        selectedAreas.splice(idx, 1);
+      } else {
+        if (selectedAreas.length >= 3) {
+          alert("Selecciona máximo 3 áreas predominantes para un análisis claro.");
+          return;
+        }
+        selectedAreas.push(code);
+      }
+      selectedAreas.sort();
+      updateKuderUI();
+    }
+
+    function clearKuderSelection() {
+      selectedAreas = [];
+      updateKuderUI();
+    }
+
+    function updateKuderUI() {
+      document.querySelectorAll('.kuder-area-btn').forEach(btn => btn.classList.remove('selected'));
+      selectedAreas.forEach(code => {
+        document.getElementById(`kbtn-${code}`).classList.add('selected');
+      });
+
+      const out = document.getElementById('kuder-analysis-output');
+      if (selectedAreas.length === 0) {
+        out.innerHTML = `
+          <h3>📋 Resultado del Análisis Vocacional</h3>
+          <p style="color: var(--text-muted);">Selecciona de 1 a 3 áreas arriba para ver su descripción y las carreras recomendadas según el Manual de Kuder.</p>
+        `;
+        return;
+      }
+
+      let html = `<h3>📋 Análisis de Áreas Predominantes (${selectedAreas.map(c => 'Área ' + c).join(', ')})</h3>`;
+
+      // Si hay 2 o más áreas, generar pares combinados
+      if (selectedAreas.length >= 2) {
+        html += `<div style="margin: 1rem 0; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px;">
+          <h4 style="color: #166534; margin-bottom: 0.5rem;">🔗 Combinaciones Ocupacionales (Pares Kuder arriba del Percentil 75/77):</h4>`;
+
+        let foundCombo = false;
+        for (let i = 0; i < selectedAreas.length; i++) {
+          for (let j = i + 1; j < selectedAreas.length; j++) {
+            const pairKey = selectedAreas[i] + selectedAreas[j];
+            if (kuderCombinations[pairKey]) {
+              foundCombo = true;
+              const combo = kuderCombinations[pairKey];
+              html += `
+                <div style="margin-bottom: 0.85rem;">
+                  <strong>${combo.title}:</strong>
+                  <div class="pill-list">
+                    ${combo.careers.map(c => `<span class="pill combo">${c}</span>`).join('')}
+                  </div>
+                </div>
+              `;
+            } else {
+              html += `<p style="font-size:0.9rem; color:#15803d; margin-bottom:0.5rem;">
+                • Combinación <strong>${pairKey}</strong>: El manual sugiere revisar y complementar directamente las ocupaciones de las áreas individuales ${selectedAreas[i]} y ${selectedAreas[j]}.
+              </p>`;
+            }
+          }
+        }
+        html += `</div>`;
+      }
+
+      // Mostrar detalle de cada área individual seleccionada
+      selectedAreas.forEach(code => {
+        const area = kuderAreas[code];
+        html += `
+          <div style="margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+            <h4 style="color: var(--primary-dark);">Área "${area.code}": ${area.name}</h4>
+            <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0.35rem 0 0.6rem;">${area.desc}</p>
+            <strong style="font-size: 0.88rem;">Ocupaciones de esta área según el Manual:</strong>
+            <div class="pill-list">
+              ${area.careers.map(c => `<span class="pill">${c}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      out.innerHTML = html;
+    }
+
+    // Renderizar catálogo de Universidades
+    function renderUniCards() {
+      const query = document.getElementById('uni-search').value.toLowerCase();
+      const areaFilter = document.getElementById('uni-area-filter').value;
+      const instFilter = document.getElementById('uni-inst-filter').value;
+
+      const filtered = universityCatalog.filter(item => {
+        const matchesText = item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+        const matchesArea = areaFilter === 'all' || item.areas.includes(areaFilter);
+        const matchesInst = instFilter === 'all' || item.unis.includes(instFilter);
+        return matchesText && matchesArea && matchesInst;
+      });
+
+      const container = document.getElementById('uni-cards-container');
+      if (filtered.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted);">No se encontraron carreras con esos filtros.</p>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => `
+        <article class="card">
+          <h3>🎓 ${item.name}</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.85rem;">${item.desc}</p>
+          <div style="margin-bottom: 0.6rem;">
+            <strong style="font-size: 0.8rem; color: var(--text-muted); display:block; margin-bottom:0.25rem;">Áreas Kuder vinculadas:</strong>
+            ${item.areas.map(a => `<span class="uni-tag" style="background:#e0e7ff; color:#3730a3;">Área ${a}:${kuderAreas[a].name}</span>`).join('')}
+          </div>
+          <div>
+            <strong style="font-size: 0.8rem; color: var(--text-muted); display:block; margin-bottom:0.25rem;">Universidades donde se imparte:</strong>
+            ${item.unis.map(u => `<span class="uni-tag">${u}</span>`).join('')}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Verificador de Puntaje V
+    function checkVScore() {
+      const val = parseInt(document.getElementById('v-score-input').value, 10);
+      const box = document.getElementById('v-score-result');
+      if (isNaN(val)) {
+        box.innerHTML = "Por favor ingresa un número.";
+        return;
+      }
+      if (val >= 36 && val <= 44) {
+        box.style.background = "#dcfce7";
+        box.style.color = "#14532d";
+        box.innerHTML = `<strong>✅ Prueba Válida (${val} puntos):</strong> Cumple con el rango de validez estricta (36 a 44 puntos en Forma CH, y 33 a 44 en Forma C). Puedes proceder a graficar e interpretar tu perfil.`;
+      } else if (val >= 33 && val <= 35) {
+        box.style.background = "#fef9c3";
+        box.style.color = "#713f12";
+        box.innerHTML = `<strong>⚠️ Validez Aceptable en Forma C / Dudosa en Forma CH (${val} puntos):</strong> En el manual Forma C (33-44) se considera válida, mientras que en el manual Forma CH (32-35) se considera dudosa. Se sugiere interpretar con cautela.`;
+      } else if (val >= 28 && val <= 32) {
+        box.style.background = "#ffedd5";
+        box.style.color = "#7c2d12";
+        box.innerHTML = `<strong>⚠️ Resultado Dudoso (${val} puntos):</strong> Puede deberse a indecisión, descuido o preferencias muy atípicas.`;
+      } else if (val > 44) {
+        box.style.background = "#fee2e2";
+        box.style.color = "#7f1d1d";
+        box.innerHTML = `<strong>❌ No Válida (${val} puntos):</strong> Un puntaje de 45 o más indica que se marcaron demasiadas respuestas por triada (el máximo posible es 44). Se recomienda repetir la prueba.`;
+      } else {
+        box.style.background = "#fee2e2";
+        box.style.color = "#7f1d1d";
+        box.innerHTML = `<strong>❌ Carece de Validez (${val} puntos):</strong> Refleja muchas omisiones o falta de comprensión de las instrucciones. El manual recomienda repetir la aplicación.`;
+      }
+    }
+
+    // Renderizar simulador de triadas
+    const triadState = {};
+    function initTriads() {
+      const container = document.getElementById('triads-container');
+      container.innerHTML = sampleTriads.map(t => `
+        <div class="triad-box">
+          <h4 style="margin-bottom: 0.5rem; color: var(--primary-dark);">Grupo de Actividades #${t.id}</h4>
+          ${t.items.map((item, idx) => `
+            <div class="triad-row">
+              <span><strong>${item.letter}.</strong>${item.text}</span>
+              <div class="triad-controls">
+                <button class="btn-choice plus" id="t-${t.id}-plus-${idx}" onclick="selectTriad(${t.id}, 'plus',${idx})">+ Me gusta más</button>
+                <button class="btn-choice minus" id="t-${t.id}-minus-${idx}" onclick="selectTriad(${t.id}, 'minus',${idx})">- Me gusta menos</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `).join('');
+    }
+
+    function selectTriad(triadId, type, itemIdx) {
+      if (!triadState[triadId]) triadState[triadId] = { plus: null, minus: null };
+      const state = triadState[triadId];
+
+      // Evitar que la misma opción tenga + y - al mismo tiempo
+      if (type === 'plus' && state.minus === itemIdx) state.minus = null;
+      if (type === 'minus' && state.plus === itemIdx) state.plus = null;
+
+      state[type] = itemIdx;
+
+      // Actualizar botones visuales
+      [0, 1, 2].forEach(i => {
+        document.getElementById(`t-${triadId}-plus-${i}`).classList.toggle('active', state.plus === i);
+        document.getElementById(`t-${triadId}-minus-${i}`).classList.toggle('active', state.minus === i);
+      });
+    }
+
+    // Inicializar todo al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      initKuderButtons();
+      renderUniCards();
+      initTriads();
+    });
   </script>
 </body>
 </html>
