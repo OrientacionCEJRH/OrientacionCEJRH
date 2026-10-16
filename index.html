@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía Interactiva</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 2rem; background: #f8fafc; color: #1e293b; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .step { border-left: 4px solid #3b82f6; padding-left: 1rem; margin-bottom: 1.5rem; }
+    .interactive-box { background: #f1f5f9; padding: 1rem; border-radius: 6px; margin: 1rem 0; }
+    button { background: #2563eb; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Guía Interactiva de Aprendizaje</h1>
+    <p>Sigue los pasos y verifica tu progreso:</p>
 
+    <div class="step">
+      <h3>Paso 1: Diagnóstico inicial</h3>
+      <p>Selecciona una opción para desplegar el contenido adecuado:</p>
+      <div class="interactive-box">
+        <label><input type="radio" name="level" onclick="mostrarInfo('basico')"> Nivel Básico</label><br>
+        <label><input type="radio" name="level" onclick="mostrarInfo('avanzado')"> Nivel Avanzado</label>
+        
+        <div id="basico" class="hidden" style="margin-top: 10px;">
+          <strong>Ruta Básica:</strong> Comenzaremos revisando los fundamentos teóricos y conceptos clave.
+        </div>
+        <div id="avanzado" class="hidden" style="margin-top: 10px;">
+          <strong>Ruta Avanzada:</strong> Pasaremos directo a los ejercicios prácticos y análisis de casos.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>Paso 2: Comprobación de conceptos</h3>
+      <div class="interactive-box">
+        <label><input type="checkbox" onchange="actualizarProgreso()"> Completé la lectura principal</label><br>
+        <label><input type="checkbox" onchange="actualizarProgreso()"> Realicé la actividad formativa</label>
+        <p id="progreso-texto">Progreso: 0 de 2 completados</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function mostrarInfo(tipo) {
+      document.getElementById('basico').classList.add('hidden');
+      document.getElementById('avanzado').classList.add('hidden');
+      document.getElementById(tipo).classList.remove('hidden');
+    }
+
+    function actualizarProgreso() {
+      const checks = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      document.getElementById('progreso-texto').textContent = `Progreso: ${checks} de 2 completados`;
+    }
+  </script>
+</body>
+</html>
